@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web_site:
+    image: "web_site"
+    restart: unless-stopped
+    build:
+      context: ./services
+      dockerfile: ./web_site/dockerfile
+    environment:
+      - MONGO_CLUSTER=${MONGO_CLUSTER}
+    volumes:
+      - ./services/web_site/app/static:/opt/web_site/app/static
+    ports:
+      - "5003:5003"
+    logging:
+      driver: splunk
+      options:
+        splunk-url: https://splunk.ssllc.dev:8088
+        splunk-token: need-new-one
+        splunk-insecureskipverify: 'true'

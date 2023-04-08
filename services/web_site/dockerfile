@@ -1,0 +1,8 @@
+FROM ubuntu:18.04
+RUN apt-get update -y && apt-get install -y --force-yes python3 python3-pip poppler-utils
+ADD ./web_site/stable-req.txt /tmp/requirements.txt
+RUN pip3 install -qr /tmp/requirements.txt
+ADD ./web_site /opt/web_site/
+WORKDIR /opt/web_site
+CMD ["python3", "-u", "run.py"]
+
